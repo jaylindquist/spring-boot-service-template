@@ -12,30 +12,30 @@ import org.springframework.web.bind.annotation.ResponseBody
 
 @Controller
 class Franchise {
-	private JdbcTemplate jdbcTemplate
+    private JdbcTemplate jdbcTemplate
 
-	@Autowired
-	public Franchise(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource)
-	}
-	
-	@ResponseBody
-	@RequestMapping('/franchise/{id}')
-    String franchiseId(@PathVariable Long id) {
-		try {
-			return jdbcTemplate.queryForMap('SELECT id, title FROM franchises WHERE id=?', id)
-		} catch(EmptyResultDataAccessException ex) {
-			return Collections.EMPTY_MAP
-		}
+    @Autowired
+    public Franchise(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource)
     }
-	
-	@ResponseBody
-	@RequestMapping('/franchise/')
+    
+    @ResponseBody
+    @RequestMapping('/franchise/{id}')
+    String franchiseId(@PathVariable Long id) {
+        try {
+            return jdbcTemplate.queryForMap('SELECT id, title FROM franchises WHERE id=?', id)
+        } catch(EmptyResultDataAccessException ex) {
+            return Collections.EMPTY_MAP
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping('/franchise/')
     String franchises() {
-		try {
-			return jdbcTemplate.queryForList('SELECT id, title FROM franchises')
-		} catch(EmptyResultDataAccessException ex) {
-			return Collections.EMPTY_MAP
-		}
+        try {
+            return jdbcTemplate.queryForList('SELECT id, title FROM franchises')
+        } catch(EmptyResultDataAccessException ex) {
+            return Collections.EMPTY_MAP
+        }
     }
 }

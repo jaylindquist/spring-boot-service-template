@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.*
 class App {
     public static void main(String[] args) throws Exception {
         def app = new SpringApplication(App.class)
-		app.showBanner = false
-		app.run(args)
+        app.showBanner = false
+        app.run(args)
     }
 }

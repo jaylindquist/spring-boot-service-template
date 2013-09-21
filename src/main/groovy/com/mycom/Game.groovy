@@ -14,30 +14,30 @@ import com.fasterxml.jackson.databind.node.NodeCursor.Object;
 
 @Controller
 class Game {
-	private JdbcTemplate jdbcTemplate
+    private JdbcTemplate jdbcTemplate
 
-	@Autowired
-	public Game(DataSource dataSource) {
-		this.jdbcTemplate = new JdbcTemplate(dataSource)
-	}
-	
-    @ResponseBody
-	@RequestMapping('/franchise/{franchiseId}/game/{id}')
-    String gameId(@PathVariable Long franchiseId, @PathVariable Long id) {
-		try {
-			return jdbcTemplate.queryForMap('SELECT id, name, release FROM games WHERE franchise_id=? AND id=?', franchiseId, id)
-		} catch(EmptyResultDataAccessException ex) {
-			return Collections.EMPTY_MAP
-		}
+    @Autowired
+    public Game(DataSource dataSource) {
+        this.jdbcTemplate = new JdbcTemplate(dataSource)
     }
-	
+    
     @ResponseBody
-	@RequestMapping('/franchise/{franchiseId}/game')
+    @RequestMapping('/franchise/{franchiseId}/game/{id}')
+    String gameId(@PathVariable Long franchiseId, @PathVariable Long id) {
+        try {
+            return jdbcTemplate.queryForMap('SELECT id, name, release FROM games WHERE franchise_id=? AND id=?', franchiseId, id)
+        } catch(EmptyResultDataAccessException ex) {
+            return Collections.EMPTY_MAP
+        }
+    }
+    
+    @ResponseBody
+    @RequestMapping('/franchise/{franchiseId}/game')
     String games(@PathVariable Long franchiseId) {
-		try {
-			return jdbcTemplate.queryForList('SELECT id, name, release FROM games WHERE franchise_id=?', franchiseId)
-		} catch(EmptyResultDataAccessException ex) {
-			return Collections.EMPTY_MAP
-		}
+        try {
+            return jdbcTemplate.queryForList('SELECT id, name, release FROM games WHERE franchise_id=?', franchiseId)
+        } catch(EmptyResultDataAccessException ex) {
+            return Collections.EMPTY_MAP
+        }
     }
 }
